@@ -51,7 +51,16 @@ public class Caesar {
             else {
                 newstr = newstr + (char) chnum;
             }
-
+            if (chnum >= 65 && chnum <= 90) {
+                int newchnum = chnum - 'A';
+                int originalplace = newchnum - 3;
+                int newplace = originalplace % 26;
+                char newch = (char) (newplace + 'A'); //go back to original place
+                newstr = newstr + newch;
+            }
+            else {
+                newstr = newstr + (char) chnum;
+            }
         }
         return newstr;
     }
