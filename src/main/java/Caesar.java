@@ -16,10 +16,7 @@ public class Caesar {
                 char newch = (char) (newplace + 'a'); //go back to original place
                 newstr = newstr + newch;
             }
-            else {
-                newstr = newstr + (char) chnum;
-            }
-            if (chnum >= 65 && chnum <= 90) {
+            else if  (chnum >= 65 && chnum <= 90) {
                 int newchnum = chnum - 'A';
                 int originalplace = newchnum + 3;
                 int newplace = originalplace % 26;
@@ -43,18 +40,17 @@ public class Caesar {
             int chnum = message.charAt(i);
             if (chnum >= 97 && chnum <= 122) {
                 int newchnum = chnum - 'a';
-                int originalplace = newchnum - 3;
-                int newplace = originalplace % 26;
+                int originalplace = newchnum - (3%26);
+                int origplace = originalplace + 26;
+                int newplace = origplace % 26;
                 char newch = (char) (newplace + 'a'); //go back to original place
                 newstr = newstr + newch;
             }
-            else {
-                newstr = newstr + (char) chnum;
-            }
-            if (chnum >= 65 && chnum <= 90) {
+            else if (chnum >= 65 && chnum <= 90) {
                 int newchnum = chnum - 'A';
-                int originalplace = newchnum - 3;
-                int newplace = originalplace % 26;
+                int originalplace = newchnum - (3%26);
+                int origplace = originalplace + 26;
+                int newplace = origplace % 26;
                 char newch = (char) (newplace + 'A'); //go back to original place
                 newstr = newstr + newch;
             }
@@ -69,16 +65,62 @@ public class Caesar {
     // the String using the given key and returns the encrypted String
     // Ex. encryptCaesarKey("Hello, World!", 5) => "Mjqqt, Btwqi!".
     public static String encryptCaesarKey(String message, int key){
-        // REPLACE THIS WITH YOUR CODE
-        return message;
+        int length = message.length();
+        String newstr = "";
+        for (int i = 0; i < length; i++) {
+            int chnum = message.charAt(i);
+            if (chnum >= 97 && chnum <= 122) {
+                int newchnum = chnum - 'a';
+                int originalplace = newchnum + key;
+                int origplace = originalplace + 26;
+                int newplace = origplace % 26;
+                char newch = (char) (newplace + 'a'); //go back to original place
+                newstr = newstr + newch;
+            }
+            else if (chnum >= 65 && chnum <= 90) {
+                int newchnum = chnum - 'A';
+                int originalplace = newchnum + key;
+                int origplace = originalplace + 26;
+                int newplace = origplace % 26;
+                char newch = (char) (newplace + 'A'); //go back to original place
+                newstr = newstr + newch;
+            }
+            else {
+                newstr = newstr + (char) chnum;
+            }
+        }
+        return newstr;
     }
 
     // Given a String and a key corresponding to a shift, decrypts
     // the String using the given key and returns the original String
     // Ex. decryptCaesarKey("Mjqqt, Btwqi!", 5) => "Hello, World!"
     public static String decryptCaesarKey (String message,int key){
-        // REPLACE THIS WITH YOUR CODE
-        return message;
+        int length = message.length();
+        String newstr = "";
+        for (int i = 0; i < length; i++) {
+            int chnum = message.charAt(i);
+            if (chnum >= 97 && chnum <= 122) {
+                int newchnum = chnum - 'a';
+                int originalplace = newchnum - (key%26);
+                int origplace = originalplace + 26;
+                int newplace = origplace % 26;
+                char newch = (char) (newplace + 'a'); //go back to original place
+                newstr = newstr + newch;
+            }
+            else if (chnum >= 65 && chnum <= 90) {
+                int newchnum = chnum - 'A';
+                int originalplace = newchnum - (key%26);
+                int origplace = originalplace + 26;
+                int newplace = origplace % 26;
+                char newch = (char) (newplace + 'A'); //go back to original place
+                newstr = newstr + newch;
+            }
+            else {
+                newstr = newstr + (char) chnum;
+            }
+        }
+        return newstr;
     }
 
 
@@ -89,7 +131,7 @@ public class Caesar {
 
             System.out.println("Would you like to \"encrypt\" or \"decrypt\" a message?");
             String command = scan.nextLine().trim().toLowerCase();
-
+            /*
             if (command.equals("encrypt")) {
                 System.out.println("Please enter your message to be encrypted: ");
                 String message = scan.nextLine();
@@ -103,7 +145,24 @@ public class Caesar {
             } else {
                 System.out.println("Unknown command; please type either \"encrypt\" or \"decrypt\"");
             }
-
+            */
+            if (command.equals("encrypt")) {
+                System.out.println("Please enter your message to be encrypted: ");
+                String message = scan.nextLine();
+                System.out.println("Please enter the key for your message: ");
+                int num = scan.nextInt();
+                System.out.println("Here is your encrypted message: ");
+                System.out.println(encryptCaesarKey(message, num));
+            } else if (command.equals("decrypt")) {
+                System.out.println("Please enter your message to be decrypted: ");
+                String message = scan.nextLine();
+                System.out.println("Please enter the key for your message: ");
+                int numdiff = scan.nextInt();
+                System.out.println("Here is your decrypted message: ");
+                System.out.println(decryptCaesarKey(message, numdiff));
+            } else {
+                System.out.println("Unknown command; please type either \"encrypt\" or \"decrypt\"");
+            }
             scan.close();
         }
     }
